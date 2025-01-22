@@ -8,6 +8,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import MapScreen from './Screens/MapScreen';
 import ListScreen from './Screens/ListScreen';
 import SettingsScreen from './Screens/SettingsScreen';
+import SignInScreen from './Screens/SignInScreen';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,7 +26,7 @@ const TabNavigator = () => {
           iconName = focused ? 'map' : 'map-outline';
         } else if (route.name === 'Liste') {
           iconName = focused ? 'list' : 'list-outline';
-        }else if (route.name === 'Settings') {
+        } else if (route.name === 'Settings') {
           iconName = focused ? 'settings' : 'settings-outline';
         }
 
@@ -47,6 +48,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} >
+        <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
