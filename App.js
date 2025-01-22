@@ -55,8 +55,9 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }} >
-          <Stack.Screen name="SignInScreen" component={SignInScreen} />
+          
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="SignInScreen" component={SignInScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
