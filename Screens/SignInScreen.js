@@ -5,14 +5,14 @@ import TextInputR from "../components/common/TextInputR";
 import Template from "../components/common/Template";
 import ButtonR from "../components/common/ButtonR";
 
+import { useDispatch } from "react-redux";
+import { addToken } from "../reducers/user";
+
+
 const backend = config.API_URL
 console.log(backend)
 
 const UserEmailField = ({ value, onChangeText }) => {
-
-
-
-
     return (
         <TextInputR
             value={value}
@@ -24,10 +24,6 @@ const UserEmailField = ({ value, onChangeText }) => {
 }
 
 const UserPasswordField = ({ value, onChangeText }) => {
-
-
-
-
     return (
         <TextInputR
             value={value}
@@ -44,9 +40,11 @@ const SignInScreen = ({ navigation }) => {
     const [password, setPassword] = React.useState('');
     const [email, setEmail] = React.useState('');
 
+    const dispatch = useDispatch();
+
     const SignInButton = async () => {
 
-
+        
 
         if (!email || !password) {
 
@@ -64,13 +62,14 @@ const SignInScreen = ({ navigation }) => {
             const data = await response.json();
 
             if (data.result) {
-                console.log(data.token)
+                
+                dispatch(addToken(data.token));
                 navigation.replace('TabNavigator');
             }
 
             navigation.replace('TabNavigator');
 
-        }catch (error) {
+        } catch (error) {
             console.error('Error during sign-in:', error);
             Alert.alert('Erreur', 'Une erreur est survenue. Veuillez réessayer.');
         }

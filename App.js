@@ -3,12 +3,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Importez la bibliothèque d'icônes
 
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import MapScreen from './Screens/MapScreen';
 import ListScreen from './Screens/ListScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import SignInScreen from './Screens/SignInScreen';
+
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import user from './reducers/user';
+
+const store = configureStore({
+  reducer: { user },
+});
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -46,11 +52,13 @@ const TabNavigator = () => {
 }
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} >
-        <Stack.Screen name="SignInScreen" component={SignInScreen} />
-        <Stack.Screen name="TabNavigator" component={TabNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }} >
+          <Stack.Screen name="SignInScreen" component={SignInScreen} />
+          <Stack.Screen name="TabNavigator" component={TabNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
