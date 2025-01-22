@@ -3,7 +3,7 @@ import { TextInput, StyleSheet, View, TouchableOpacity, Text } from "react-nativ
 import isEmail from "../security/isEmail";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-const TextInputR = ({ value, onChangeText, placeholder, secureTextEntry, type }) => {
+const TextInputR = ({ value, onChangeText, placeholder, secureTextEntry, type, autoCapitalize }) => {
 
 
     if (type == "password") {
@@ -20,6 +20,7 @@ const TextInputR = ({ value, onChangeText, placeholder, secureTextEntry, type })
                     value={value}
                     placeholder={placeholder || "Saisissez votre mot de passe"}
                     secureTextEntry={!isPasswordVisible} // Cache le texte si isPasswordVisible est faux
+                    autoCapitalize={autoCapitalize}
                 />
                 <TouchableOpacity
                     onPress={togglePasswordVisibility}
@@ -51,6 +52,7 @@ const TextInputR = ({ value, onChangeText, placeholder, secureTextEntry, type })
                         onChangeText(text);
                         if (touched) validateEmail(text); // Valide en temps réel uniquement si le champ a été touché
                     }}
+                    autoCapitalize={autoCapitalize}
                     value={value}
                     placeholder={placeholder || "Saisissez l'email"}
                     secureTextEntry={secureTextEntry}

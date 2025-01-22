@@ -1,17 +1,13 @@
 import React from "react";
 import { Button, StyleSheet } from "react-native";
 
-const ButtonR = () => {
-
-    const validation = () => {
-        console.log("validation")
-    }
+const ButtonR = ({onPress}) => {
 
     return (
         <Button
       
-            title="Press me"
-            onPress={() => validation()}
+            title="Connexion"
+            onPress={onPress}
         >
         </Button>
     )
