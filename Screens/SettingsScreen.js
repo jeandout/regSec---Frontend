@@ -4,6 +4,7 @@ import ButtonR from '../components/common/ButtonR';
 import FetchMapData from '../components/FetchMapData';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateWaypoints, updateRoutes, updateLogisticRoutes } from '../reducers/user';
+import Template from '../components/common/Template';
 
 
 export default function SettingsScreen() {
@@ -33,13 +34,13 @@ export default function SettingsScreen() {
 
 
     return (
-        <View style={styles.container}>
+        <Template style={styles.container}>
             <Text>Settings</Text>
             <ButtonR
                 title={"mettre à jour les données carte"}
                 onPress={handleFetchMapData}
             />
-        </View>
+        </Template>
     )
 }
 

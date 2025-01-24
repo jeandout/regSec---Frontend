@@ -85,8 +85,6 @@ export default function MapScreen() {
             <MaterialIcons name="my-location" size={30} color="blue" />
           </View>
         </Marker>
-
-        <Waypoint description="DEFAULT" latitude={48.447095706} longitude={1.4873060249} title="DEFAULT" />
         {displayWaypoints}
         {displayRoutes}
         {displayLogisticRoutes}
