@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 import ButtonR from '../components/common/ButtonR';
-import FetchWaypoint from '../components/FetchWaypoints';
+import FetchMapData from '../components/FetchMapData';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateWaypoints } from '../reducers/user';
+import { updateWaypoints, updateRoutes, updateLogisticRoutes } from '../reducers/user';
 
 
 export default function SettingsScreen() {
@@ -11,23 +11,33 @@ export default function SettingsScreen() {
     const token = useSelector((state) => state.user.token);
     console.log('from setting screen :' + token)
 
-    const handleFetchWaypoints = async () => {
+    const handleFetchMapData = async () => {
         try {
-            const data = await FetchWaypoint(token); // Appel à la fonction utilitaire
-            dispatch(updateWaypoints(data));
-            Alert.alert('Succès', 'Les points ont été mis à jour avec succès.');
+            // Fetch waypoints
+            const waypoints = await FetchMapData(token, "/itineraries/waypoints");
+            dispatch(updateWaypoints(waypoints));
+
+            // Fetch routes
+            const routes = await FetchMapData(token, "/itineraries/routes");
+            dispatch(updateRoutes(routes));
+
+            const logisticRoutes = await FetchMapData(token, "/itineraries/logistic-routes");
+            dispatch(updateLogisticRoutes(logisticRoutes));
+
+            Alert.alert('Succès', 'Les points et les routes ont été mis à jour avec succès.');
         } catch (err) {
             console.error(err);
-            Alert.alert('Erreur', "Impossible de récupérer les points.");
+            Alert.alert('Erreur', "Impossible de récupérer les données (points ou routes).");
         }
     };
+
 
     return (
         <View style={styles.container}>
             <Text>Settings</Text>
             <ButtonR
-                title={"mettre à jour les points"}
-                onPress={handleFetchWaypoints}
+                title={"mettre à jour les données carte"}
+                onPress={handleFetchMapData}
             />
         </View>
     )

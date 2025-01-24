@@ -1,5 +1,5 @@
 import React from 'react';
-import MapView, { Marker } from 'react-native-maps'; // Importer le Marker depuis 'react-native-maps'
+import MapView, { Marker, Polyline } from 'react-native-maps'; // Importer le Marker depuis 'react-native-maps'
 import { StyleSheet, View, Dimensions } from 'react-native';
 import Waypoint from '../components/map/Waypoint';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"; // Importer les icônes Material
@@ -11,8 +11,11 @@ import { useEffect } from 'react';
 import * as Location from 'expo-location';
 
 export default function MapScreen() {
+  console.log("MapScreen");
 
   const waypoints = useSelector((state) => state.user.waypoints);
+  const routes = useSelector((state) => state.user.routes);
+  const logisticRoutes = useSelector((state) => state.user.logisticRoutes);
 
   const [userLocation, setUserLocation] = React.useState({ "coords": { "accuracy": 100, "altitude": 93.5999984741211, "altitudeAccuracy": 100, "heading": 0, "latitude": 48.7184, "longitude": 1.9745, "speed": 0 }, "mocked": false, "timestamp": 1737626593868 })
 
@@ -30,8 +33,31 @@ export default function MapScreen() {
   }, []);
 
   const displayWaypoints = waypoints.map((waypoint, i) => {
-    const [longitude, latitude ] = waypoint.coordinates;
-    return ( <Waypoint key={i} latitude ={latitude} longitude={longitude} title={waypoint.name} description= {waypoint.properties.sym}  /> );
+    const [longitude, latitude] = waypoint.coordinates;
+    return (<Waypoint
+      key={i}
+      latitude={latitude}
+      longitude={longitude}
+      title={waypoint.name}
+      description={waypoint.properties.sym} />);
+  })
+
+  const displayRoutes = routes.map((route, i) => {
+    return (<Polyline
+      key={i}
+      coordinates={route.coordinates}
+      strokeColor="blue" // Couleur de la ligne
+      strokeWidth={4} // Épaisseur de la ligne
+    />);
+  })
+
+  const displayLogisticRoutes = logisticRoutes.map((route, i) => {
+    return (<Polyline
+      key={i}
+      coordinates={route.coordinates}
+      strokeColor="yellow" // Couleur de la ligne
+      strokeWidth={4} // Épaisseur de la ligne
+    />);
   })
 
   return (
@@ -40,10 +66,10 @@ export default function MapScreen() {
         mapType="terrain"
         style={styles.map}
         initialRegion={{
-          latitude: 48.7184, // Latitude moyenne entre Chartres et Paris
-          longitude: 1.9745, // Longitude moyenne entre Chartres et Paris
-          latitudeDelta: 3.0, // Zoom ajusté pour englober les deux villes
-          longitudeDelta: 3.0,
+          latitude: userLocation.coords.latitude,
+          longitude: userLocation.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}
       >
         {/* Placer le Marker à l'intérieur de MapView */}
@@ -54,14 +80,16 @@ export default function MapScreen() {
           }}
           title="Moi"
           description="Position de l'utilisateur"
-          >
-            <View style={styles.iconContainer}>
-                <MaterialIcons name="my-location" size={30} color="blue" />
-            </View>
-          </Marker>
-        
+        >
+          <View style={styles.iconContainer}>
+            <MaterialIcons name="my-location" size={30} color="blue" />
+          </View>
+        </Marker>
+
         <Waypoint description="DEFAULT" latitude={48.447095706} longitude={1.4873060249} title="DEFAULT" />
         {displayWaypoints}
+        {displayRoutes}
+        {displayLogisticRoutes}
       </MapView>
     </View>
   );

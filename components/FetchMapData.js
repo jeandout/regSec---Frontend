@@ -3,10 +3,10 @@ import config from "../config";
 const backend = config.API_URL;
 
 
-const FetchWaypoint = async (token) => {
+const FetchMapData = async (token, endpoint) => {
   try {
-    // const response = await fetch(`${backend}/itineraries/waypoints`);
-    const response = await fetch(`${backend}/itineraries/waypoints`, {
+console.log(backend+endpoint);
+    const response = await fetch(backend+endpoint, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
@@ -14,14 +14,14 @@ const FetchWaypoint = async (token) => {
         },
       })
     if (!response.ok) {
-      throw new Error('Erreur lors de la récupération des points');
+      throw new Error(`Erreur lors de la récupération des ${endpoint}`);
     }
     const data = await response.json();
     return data; // Retourne les données récupérées
   } catch (err) {
-    console.error('Erreur dans FetchWaypoint :', err.message);
+    console.error(`Erreur dans fetch ${endpoint} :`, err.message);
     throw err; // Propagation de l'erreur
   }
 };
 
-export default FetchWaypoint;
+export default FetchMapData;

@@ -4,10 +4,11 @@ import config from "../config";
 import TextInputR from "../components/common/TextInputR";
 import Template from "../components/common/Template";
 import ButtonR from "../components/common/ButtonR";
-import FetchWaypoint from "../components/FetchWaypoints";
+import FetchMapData from "../components/FetchMapData";
 
 import { useDispatch } from "react-redux";
-import { addToken, updateWaypoints } from "../reducers/user";
+import { addToken, updateWaypoints, updateRoutes, updatelogisticRoutes } from "../reducers/user";
+
 
 
 const backend = config.API_URL
@@ -43,14 +44,22 @@ const SignInScreen = ({ navigation }) => {
 
     const dispatch = useDispatch();
     
-    const useFetchWaypoints = async (token) => {
+    const useFetchMapData = async (token) => {
         try {
-            const data = await FetchWaypoint(token); // Appel à la fonction utilitaire
-            dispatch(updateWaypoints(data));
-            // Alert.alert('Succès', 'Les points ont été mis à jour avec succès.');
+           // Fetch waypoints
+           const waypoints = await FetchMapData(token, "/itineraries/waypoints");
+           dispatch(updateWaypoints(waypoints));
+
+           // Fetch routes
+           const routes = await FetchMapData(token, "/itineraries/routes");
+           dispatch(updateRoutes(routes));
+
+           const logisticRoutes = await FetchMapData(token, "/itineraries/logistic-routes");
+           dispatch(updateLogisticRoutes(logisticRoutes));
+    
         } catch (err) {
             console.error(err);
-            Alert.alert('Erreur', "Impossible de récupérer les points.");
+            Alert.alert('Erreur', "Impossible de récupérer les données (points ou routes).");
         }
     };
 
@@ -75,7 +84,7 @@ const SignInScreen = ({ navigation }) => {
             if (data.result) {
                 
                 dispatch(addToken(data.token));
-                useFetchWaypoints(data.token);
+                useFetchMapData(data.token);
                 navigation.replace('TabNavigator');
             }
 
