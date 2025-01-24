@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImY0ZDgzN2FlLWE1ZDEtNDlmNC05YTU0LTU5NDQ4YWZlYWFmZiIsImlhdCI6MTczNzcxNTk5NCwiZXhwIjoxNzM5MDExOTk0fQ.gzQ3FLIRshffnLvEGjuNWQDngOQ-bCVsTgCLt_wqznY",
+    token: "",
     location: {},
     waypoints: [],
     routes: [],

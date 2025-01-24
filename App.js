@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -59,7 +57,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }} >
-          {/* <Stack.Screen name="SignInScreen" component={SignInScreen} /> */}
+          <Stack.Screen name="SignInScreen" component={SignInScreen} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
