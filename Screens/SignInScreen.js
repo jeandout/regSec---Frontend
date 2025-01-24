@@ -12,6 +12,7 @@ import { addToken, updateWaypoints, updateRoutes, updatelogisticRoutes } from ".
 
 
 const backend = config.API_URL
+console.log(backend);
 
 
 const UserEmailField = ({ value, onChangeText }) => {
@@ -55,7 +56,7 @@ const SignInScreen = ({ navigation }) => {
            dispatch(updateRoutes(routes));
 
            const logisticRoutes = await FetchMapData(token, "/itineraries/logistic-routes");
-           dispatch(updateLogisticRoutes(logisticRoutes));
+           dispatch(updatelogisticRoutes(logisticRoutes));
     
         } catch (err) {
             console.error(err);
