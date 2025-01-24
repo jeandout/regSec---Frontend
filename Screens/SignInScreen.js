@@ -4,13 +4,14 @@ import config from "../config";
 import TextInputR from "../components/common/TextInputR";
 import Template from "../components/common/Template";
 import ButtonR from "../components/common/ButtonR";
+import FetchWaypoint from "../components/FetchWaypoints";
 
 import { useDispatch } from "react-redux";
-import { addToken } from "../reducers/user";
+import { addToken, updateWaypoints } from "../reducers/user";
 
 
 const backend = config.API_URL
-console.log(backend)
+
 
 const UserEmailField = ({ value, onChangeText }) => {
     return (
@@ -41,6 +42,17 @@ const SignInScreen = ({ navigation }) => {
     const [email, setEmail] = React.useState('');
 
     const dispatch = useDispatch();
+    
+    const useFetchWaypoints = async (token) => {
+        try {
+            const data = await FetchWaypoint(token); // Appel à la fonction utilitaire
+            dispatch(updateWaypoints(data));
+            // Alert.alert('Succès', 'Les points ont été mis à jour avec succès.');
+        } catch (err) {
+            console.error(err);
+            Alert.alert('Erreur', "Impossible de récupérer les points.");
+        }
+    };
 
     const SignInButton = async () => {
 
@@ -58,12 +70,12 @@ const SignInScreen = ({ navigation }) => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
             })
-            console.log("signpressed")
             const data = await response.json();
 
             if (data.result) {
                 
                 dispatch(addToken(data.token));
+                useFetchWaypoints(data.token);
                 navigation.replace('TabNavigator');
             }
 
@@ -81,7 +93,8 @@ const SignInScreen = ({ navigation }) => {
             <UserEmailField value={email} onChangeText={setEmail} />
             <UserPasswordField value={password} onChangeText={setPassword} />
             <ButtonR
-                onPress={SignInButton} />
+                onPress={SignInButton}
+                title={"Connexion"}/>
         </Template>
     )
 };

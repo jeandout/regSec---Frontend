@@ -13,9 +13,6 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import user from './reducers/user';
 
-import { useEffect } from 'react';
-import * as Location from 'expo-location';
-
 const store = configureStore({
   reducer: { user },
 });
@@ -60,9 +57,8 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }} >
-
+          {/* <Stack.Screen name="SignInScreen" component={SignInScreen} /> */}
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
-          <Stack.Screen name="SignInScreen" component={SignInScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

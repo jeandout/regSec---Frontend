@@ -1,12 +1,12 @@
 import React from "react";
 import { Button, StyleSheet } from "react-native";
 
-const ButtonR = ({onPress}) => {
+const ButtonR = ({onPress, title}) => {
 
     return (
         <Button
       
-            title="Connexion"
+            title={title}
             onPress={onPress}
         >
         </Button>
