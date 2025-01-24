@@ -1,6 +1,7 @@
 import config from "../config";
 
-const backend = config.API_URL;
+// const backend = config.API_URL;
+const backend = process.env.API_URL;
 
 
 const FetchMapData = async (token, endpoint) => {
