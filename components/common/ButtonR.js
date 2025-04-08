@@ -1,25 +1,28 @@
 import React from "react";
-import { Button, StyleSheet } from "react-native";
+import { Pressable, Text, StyleSheet } from "react-native";
 
-const ButtonR = ({onPress, title}) => {
-
-    return (
-        <Button
-      
-            title={title}
-            onPress={onPress}
-        >
-        </Button>
-    )
-}
+const ButtonR = ({ onPress, title }) => {
+  return (
+    <Pressable onPress={onPress} style={styles.button}>
+      <Text style={styles.text}>{title}</Text>
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
+  button: {
+    height: 40,
+    borderWidth: 1,
+    padding: 10,
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  text: {
+    color: "white",
+    fontWeight: "bold",
+  },
 });
 
-export default ButtonR
+export default ButtonR;

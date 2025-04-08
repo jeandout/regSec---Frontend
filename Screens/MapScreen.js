@@ -2,16 +2,16 @@ import React from 'react';
 import MapView, { Marker, Polyline } from 'react-native-maps'; // Importer le Marker depuis 'react-native-maps'
 import { StyleSheet, View, Dimensions } from 'react-native';
 import Waypoint from '../components/map/Waypoint';
+import Filter from '../components/common/Filter';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"; // Importer les icônes Material
 
 
 import { useSelector } from "react-redux";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 
 export default function MapScreen() {
-  console.log("MapScreen");
 
   const waypoints = useSelector((state) => state.user.waypoints);
   const routes = useSelector((state) => state.user.routes);
@@ -62,6 +62,9 @@ export default function MapScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.filter}>
+        <Filter />
+      </View>
       <MapView
         mapType="terrain"
         style={styles.map}
@@ -72,6 +75,7 @@ export default function MapScreen() {
           longitudeDelta: 0.0421,
         }}
       >
+
         {/* Placer le Marker à l'intérieur de MapView */}
         <Marker
           coordinate={{
@@ -89,7 +93,8 @@ export default function MapScreen() {
         {displayRoutes}
         {displayLogisticRoutes}
       </MapView>
-    </View>
+      
+    </View >
   );
 }
 
@@ -100,5 +105,12 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    // zIndex: 50,
+
+  },
+  filter: {
+    position: 'absolute',
+    bottom: 20,
+    zIndex: 100,
   },
 });
