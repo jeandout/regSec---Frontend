@@ -7,7 +7,7 @@ import ButtonR from "../components/common/ButtonR";
 import FetchMapData from "../components/FetchMapData";
 
 import { useDispatch } from "react-redux";
-import { addToken, updateWaypoints, updateRoutes, updatelogisticRoutes } from "../reducers/user";
+import { addToken, updateWaypoints, updateRoutes, updateLogisticRoutes } from "../reducers/user";
 
 
 
@@ -56,7 +56,7 @@ const SignInScreen = ({ navigation }) => {
            dispatch(updateRoutes(routes));
 
            const logisticRoutes = await FetchMapData(token, "/itineraries/logistic-routes");
-           dispatch(updatelogisticRoutes(logisticRoutes));
+           dispatch(updateLogisticRoutes(logisticRoutes));
     
         } catch (err) {
             console.error(err);
