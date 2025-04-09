@@ -20,6 +20,7 @@ const Filter = ({ onPress }) => {
                 animationType="fade"
                 transparent={true}
                 onRequestClose={() => setIsVisible(false)}
+                statusBarTranslucent={true}
             >
                 <Pressable style={styles.modalOverlay} onPress={() => setIsVisible(false)}>
                     <Pressable style={styles.modalContent} onPress={() => { }}>
